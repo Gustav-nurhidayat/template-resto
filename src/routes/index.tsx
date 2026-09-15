@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 import PublicLayout from "../layoutsPublic/PublicLayouts";
 import AdminLayout from "../layouts/AdminLayout";
 
@@ -8,10 +7,11 @@ import ProtectedRoute from "../components/common/ProtectedRoute";
 
 // Public Website
 import LandingPage from "../landing-page/LandingPage";
-import PublicArticles from "../landing-page/Articles";
-import ArticleDetail from "../landing-page/ArticleDetail";
-import Team from "../landing-page/Team";
-import Approach from "../landing-page/Approach";
+import Menu from "../landing-page/Menu";
+import MenuDetail from "../landing-page/MenuDetail";
+import About from "../landing-page/About";
+import Location from "../landing-page/Location";
+import KarirMitra from "../landing-page/KarirMitra";
 
 // Auth
 import Login from "../pages/Login";
@@ -19,100 +19,63 @@ import Login from "../pages/Login";
 // Error
 import NotFound from "../pages/NotFound";
 
-
 // Dashboard
 import Dashboard from "../pages/Dashboard";
 import Contacts from "../pages/DashboardContacts";
-
 
 // Admin Articles
 import Articles from "../pages/Articles/Articles";
 import CreateArticle from "../pages/Articles/CreateArticle";
 import EditArticle from "../pages/Articles/EditArticle";
 
-
 // Categories
 import Categories from "../pages/Categories";
 import CreateCategory from "../pages/Categories/CreateCategory";
 import EditCategory from "../pages/Categories/EditCategory";
-
 
 // Users
 import Users from "../pages/Users/Users";
 import CreateUser from "../pages/Users/CreateUser";
 import EditUser from "../pages/Users/EditUser";
 
-
 // Services
 import AdminServices from "../pages/Services/Services";
 import CreateService from "../pages/Services/CreateService";
 import EditService from "../pages/Services/EditService";
 
-
 // Admin
 import Settings from "../pages/Settings/Settings";
 import AdminTeam from "../pages/Team";
-import About from "../pages/About";
-import TeamProfile from "../landing-page/TeamProfile";
 
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
-
       <Routes>
+        {/* =========================
+            PUBLIC WEBSITE
+        ========================== */}
+        <Route element={<PublicLayout />}>
+          <Route index element={<LandingPage />} />
 
-      
-    <Route element={<PublicLayout />}>
+          {/* Menu */}
+          <Route path="menu" element={<Menu />} />
+          <Route path="menu/:slug" element={<MenuDetail />} />
 
-          <Route
-            index
-            element={<LandingPage />}
-          />
-
-
-          <Route
-            path="articles"
-            element={<PublicArticles />}
-          />
-
-
-       <Route
-  path="articles/:slug"
-  element={<ArticleDetail />}
-/>
-
-
-          <Route
-            path="team"
-            element={<Team />}
-          />
-
-          <Route
- path="team/:slug"
- element={<TeamProfile />}
-/>
-
-
-          <Route
-            path="approach"
-            element={<Approach />}
-          />
-
+          {/* Other Pages */}
+          <Route path="about" element={<About />} />
+          <Route path="location" element={<Location />} />
+          <Route path="karir-mitra" element={<KarirMitra />} />
         </Route>
 
+        {/* =========================
+            AUTH
+        ========================== */}
+        <Route path="/login" element={<Login />} />
 
-
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-
-
-       
-
+        {/* =========================
+            PROTECTED ADMIN
+        ========================== */}
         <Route
           element={
             <ProtectedRoute>
@@ -120,36 +83,17 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         >
+          {/* Dashboard */}
+          <Route path="/dashboard" element={<Dashboard />} />
 
+        
 
-          
+          {/* Contacts */}
+          <Route path="/dashboard/contacts" element={<Contacts />} />
 
-          <Route
-            path="/dashboard"
-            element={<Dashboard />}
-          />
-
-
-
-         
-          <Route
-            path="/dashboard/about"
-            element={<About />}
-          />
-
-
-
-         
-
-          <Route
-            path="/dashboard/contacts"
-            element={<Contacts />}
-          />
-
-
-
-         
-
+          {/* =========================
+              ARTICLES
+          ========================== */}
           <Route
             path="/dashboard/articles"
             element={<Articles />}
@@ -165,10 +109,9 @@ export default function AppRouter() {
             element={<EditArticle />}
           />
 
-
-
-         
-
+          {/* =========================
+              CATEGORIES
+          ========================== */}
           <Route
             path="/dashboard/categories"
             element={<Categories />}
@@ -184,9 +127,9 @@ export default function AppRouter() {
             element={<EditCategory />}
           />
 
-
-
-
+          {/* =========================
+              USERS
+          ========================== */}
           <Route
             path="/dashboard/users"
             element={<Users />}
@@ -202,25 +145,25 @@ export default function AppRouter() {
             element={<EditUser />}
           />
 
-
-
-        
-
+          {/* =========================
+              TEAM
+          ========================== */}
           <Route
             path="/dashboard/team"
             element={<AdminTeam />}
           />
 
-
-
+          {/* =========================
+              SETTINGS
+          ========================== */}
           <Route
             path="/dashboard/settings"
             element={<Settings />}
           />
 
-
-
-
+          {/* =========================
+              SERVICES
+          ========================== */}
           <Route
             path="/dashboard/services"
             element={<AdminServices />}
@@ -235,21 +178,13 @@ export default function AppRouter() {
             path="/dashboard/services/:id/edit"
             element={<EditService />}
           />
-
-
         </Route>
 
-
-
-
-        <Route
-          path="*"
-          element={<NotFound />}
-        />
-
-
+        {/* =========================
+            404
+        ========================== */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
-
     </BrowserRouter>
   );
 }
